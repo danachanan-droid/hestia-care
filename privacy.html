@@ -1,0 +1,132 @@
+You are building a mobile app MVP in Base44 for submission to Apple App Store and Google Play.
+
+APP NAME
+- Name: Hestia Care
+- Tagline: Caregiving with love
+- Type: Care coordination / daily routine management (NOT medical advice, NOT a medical device)
+
+BRAND / VISUAL DESIGN (use the uploaded Logo + App Icon as source of truth)
+- Primary brand color (from icon/logo): #70B0E0 (soft sky blue)
+- Secondary accent: #A0D0E0 (lighter blue)
+- Background: #F7FBFF (very light off-white)
+- Surfaces/cards: #FFFFFF with subtle shadow
+- Borders/dividers: #E6EEF6
+- Text: use dark neutral (e.g., near-black) for readability, avoid harsh contrast
+- Status colors: keep subtle and non-alarming (no aggressive red). Use muted green/amber for indicators.
+- UI style: calm, minimal, accessible, large typography and touch targets, rounded corners.
+- Use friendly rounded sans-serif, high readability for older adults.
+
+LANGUAGE
+- English only for MVP, but structure the UI for future localization.
+
+CORE ROLES & PERMISSIONS
+- Two roles: Caregiver, Care-Recipient
+- Link model: each Care-Recipient links to ONE primary Caregiver (MVP)
+- No location, no contacts, no microphone, no camera, no files, no wearables, no voice.
+
+MVP FEATURES (must be fully working end-to-end)
+1) Auth & Onboarding
+- Email/password sign up + login
+- Role selection (Caregiver / Care-Recipient)
+- Basic profile: display name (required), optional age
+- Invite/link flow:
+  - Caregiver generates an invite code
+  - Care-Recipient enters invite code to link
+  - After linking, Caregiver sees that Care-Recipient on dashboard
+
+2) Home Dashboard
+Care-Recipient dashboard:
+- “Today” checklist with three sections:
+  - Medications due today
+  - Tasks due today
+  - Daily check-in (1 per day)
+- Large “Mark as done” actions
+
+Caregiver dashboard:
+- Daily status overview for the linked Care-Recipient:
+  - Overall indicator: Good / Needs Attention
+  - List of incomplete or missed items (meds/tasks/check-in)
+  - Last activity timestamp
+
+3) Medication Management
+- Add medication: name, dosage text, frequency (daily / specific days / custom times)
+- Scheduling:
+  - Create reminders based on selected times
+- Care-Recipient marks “Taken”
+- Caregiver can view adherence for last 7 days (simple list)
+
+4) Tasks Management
+- Create tasks: title, notes (optional), due date or recurrence (daily/weekly)
+- Care-Recipient marks “Completed”
+- Caregiver sees completion status
+
+5) Daily Check-ins (PROM-style, non-clinical)
+- Once per day:
+  - “How do you feel today?” (Good / OK / Not good)
+  - Pain level (Low / Medium / High)
+  - Sleep quality (Good / Fair / Poor)
+- Caregiver can view a simple trend view (list and/or basic chart)
+
+6) Alerts & Notifications (simple rules, no AI)
+- Notify Care-Recipient for scheduled medication reminders
+- Notify Caregiver if:
+  - A medication is missed (not taken within X hours of scheduled time)
+  - A task is overdue
+  - “Not good” is reported 2 days in a row
+- Keep notifications wording supportive and non-alarming
+
+SETTINGS / COMPLIANCE SCREENS (REQUIRED FOR APP STORE & PLAY)
+Create a Settings screen accessible from both roles, containing:
+- About Hestia Care
+- Disclaimer text:
+  “Hestia Care supports daily caregiving routines and coordination. It does not provide medical advice, diagnosis, or treatment.”
+- Privacy Policy link (URL placeholder)
+- Terms of Use link (URL placeholder)
+- Support / Contact link (URL placeholder) + support email placeholder
+- Account actions:
+  - Logout
+  - Delete account (must be in-app, with confirmation)
+    - On delete: remove user data and unlink relationships
+
+STORE LISTING PACKAGE (generate content)
+Provide:
+- App Store / Play Store short description (≤ 80 chars)
+- Full description (non-clinical wording)
+- Keywords list
+- Category suggestion (Health & Fitness / Lifestyle – choose the best fit without implying clinical care)
+- Age rating guidance (avoid children-focused positioning)
+- Data collection summary (for Apple App Privacy + Google Data Safety), consistent with the app:
+  - Collected: account info (email), user-provided caregiving data (meds/tasks/check-ins), app activity timestamp
+  - Not collected: location, contacts, photos, audio, health diagnosis, advertising identifiers
+- A “What’s New” template for v1.0
+
+DATA MODEL (must be implemented)
+Tables/collections:
+- users {id, email, role, displayName, ageOptional, createdAt}
+- care_links {id, caregiverUserId, careRecipientUserId, inviteCode, status, createdAt}
+- medications {id, careRecipientUserId, createdByUserId, name, dosageText, scheduleTimes[], daysOfWeek[], active, createdAt}
+- medication_events {id, medicationId, scheduledAt, takenAtOptional, status}
+- tasks {id, careRecipientUserId, createdByUserId, title, notesOptional, dueAtOptional, recurrenceRuleOptional, status, createdAt}
+- checkins {id, careRecipientUserId, date, feelingEnum, painEnum, sleepEnum, createdAt}
+- activity_logs {id, userId, type, timestamp}
+
+SECURITY / ACCESS RULES (must be enforced)
+- Users can only access their own profile.
+- Caregiver can only access data for linked Care-Recipient.
+- Care-Recipient can only access their own data.
+- No cross-user data leakage.
+- All traffic HTTPS.
+
+OUT OF SCOPE (explicitly do NOT implement)
+- AI health score models
+- Voice recognition, Alexa/Google Assistant
+- Wearables, sensors integrations
+- File uploads / medical documents
+- Community/social features
+- Payments/subscriptions
+
+DELIVERABLE
+- Working Base44 project with the screens and flows above
+- Mobile-ready build configuration
+- Run Base44 “App Store / Play Store scan” and provide any fixes needed
+- Ensure Settings includes the required policy links and in-app account deletion
