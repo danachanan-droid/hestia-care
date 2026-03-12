@@ -4,63 +4,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hestia Care</title>
-  <meta name="description" content="Hestia Care supports daily caregiving routines with reminders, tasks, and simple check-ins. Not medical advice." />
+  <meta
+    name="description"
+    content="Hestia Care helps caregivers and care recipients stay connected through medications, tasks, check-ins, messaging, and shared daily care visibility."
+  />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
   <style>
     :root{
       --brand:#70B0E0;
+      --brand-dark:#4C94CB;
       --bg:#F7FBFF;
       --surface:#FFFFFF;
+      --surface-soft:#F2F8FD;
       --border:#E6EEF6;
       --text:#1F2D3D;
       --muted:#6B879C;
-      --shadow: 0 10px 30px rgba(31,45,61,.08);
-      --radius: 18px;
+      --shadow:0 10px 30px rgba(31,45,61,.08);
+      --shadow-soft:0 6px 20px rgba(31,45,61,.06);
+      --radius:18px;
+      --radius-sm:14px;
+      --max:1120px;
     }
+
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background:var(--bg);
+      color:var(--text);
       line-height:1.6;
     }
-    a{color:inherit}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
 
-    /* Layout */
     .wrap{
-      max-width:1080px;
+      max-width:var(--max);
       margin:0 auto;
       padding:24px;
     }
 
-    /* Header */
     header{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
-      padding:8px 0 18px;
+      gap:20px;
+      padding:8px 0 22px;
+      position:sticky;
+      top:0;
+      background:rgba(247,251,255,.92);
+      backdrop-filter:blur(10px);
+      z-index:50;
     }
+
     .brand{
       display:flex;
       align-items:center;
-      gap:14px;
-      text-decoration:none;
+      gap:12px;
+      min-width:0;
     }
+
     .brand img{
-      height:56px;
+      height:52px;
       width:auto;
-      display:block;
-      background:transparent;
     }
+
+    .brand-name{
+      font-size:28px;
+      font-weight:700;
+      letter-spacing:-0.3px;
+      color:#5EA6DB;
+      white-space:nowrap;
+    }
+
     nav{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       justify-content:flex-end;
     }
+
     .btn{
       display:inline-flex;
       align-items:center;
@@ -68,61 +92,49 @@
       padding:10px 14px;
       border-radius:999px;
       border:1px solid var(--border);
-      background: var(--surface);
-      text-decoration:none;
+      background:var(--surface);
       font-weight:600;
       font-size:14px;
       box-shadow:0 2px 10px rgba(31,45,61,.05);
+      transition:.2s ease;
     }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 20px rgba(31,45,61,.08);
+    }
+
     .btn.primary{
-      background: var(--brand);
-      border-color:transparent;
+      background:var(--brand);
       color:#fff;
+      border-color:transparent;
     }
 
-    /* Hero (NEW: image full width, text below full width) */
+    .btn.primary:hover{
+      background:var(--brand-dark);
+    }
+
     .hero{
-      margin-top:10px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-    .hero-image{
-      background: var(--surface);
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      width:100%;
-    }
-    .hero-image img{
-      width:100%;
-      height:auto;
-      display:block;
-      object-fit:cover;
-      max-height: 520px;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:24px;
+      align-items:center;
+      margin-top:8px;
     }
 
-    .hero-card{
-      background: var(--surface);
+    .hero-copy,
+    .hero-visual{
+      background:var(--surface);
       border:1px solid var(--border);
-      border-radius: var(--radius);
-      padding:26px;
-      box-shadow: var(--shadow);
-      width:100%;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
     }
-    .hero h1{
-      margin:0 0 10px;
-      font-size:40px;
-      line-height:1.15;
-      letter-spacing:-0.3px;
+
+    .hero-copy{
+      padding:34px 32px;
     }
-    .hero p{
-      margin:10px 0;
-      color: var(--muted);
-      font-size:17px;
-    }
-    .pill{
+
+    .eyebrow{
       display:inline-block;
       padding:8px 12px;
       border-radius:999px;
@@ -130,11 +142,32 @@
       background:#fff;
       font-size:13px;
       font-weight:600;
-      margin-bottom:14px;
       color:#31566F;
+      margin-bottom:16px;
     }
-    .disclaimer{
-      margin-top:16px;
+
+    h1{
+      margin:0 0 14px;
+      font-size:46px;
+      line-height:1.08;
+      letter-spacing:-0.8px;
+    }
+
+    .hero-copy p{
+      margin:10px 0;
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .hero-note{
+      margin-top:18px;
       padding:12px 14px;
       border-left:4px solid var(--brand);
       background:#fff;
@@ -143,32 +176,92 @@
       color:#31566F;
     }
 
-    /* Features */
+    .hero-visual{
+      padding:18px;
+      background:linear-gradient(180deg,#FFFFFF 0%, #F7FBFF 100%);
+    }
+
+    .hero-visual img{
+      width:100%;
+      height:auto;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fff;
+    }
+
     .section{
-      margin-top:32px;
+      margin-top:34px;
     }
-    .section h2{
+
+    .section-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-soft);
+      padding:28px;
+    }
+
+    .section h2,
+    .section-card h2{
       margin:0 0 8px;
-      font-size:24px;
-      letter-spacing:-0.2px;
+      font-size:28px;
+      letter-spacing:-0.4px;
     }
-    .section p.lead{
-      margin:0 0 18px;
-      color: var(--muted);
+
+    .lead{
+      margin:0 0 20px;
+      color:var(--muted);
+      font-size:17px;
     }
-    .grid{
+
+    .grid-3{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns:repeat(3,1fr);
       gap:16px;
     }
-    .card{
-      background: var(--surface);
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      padding:16px;
-      box-shadow:0 6px 20px rgba(31,45,61,.06);
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
     }
-    .card img{
+
+    .grid-4{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .mini-card,
+    .feature-card,
+    .role-card,
+    .step-card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius-sm);
+      padding:18px;
+      box-shadow:0 6px 20px rgba(31,45,61,.05);
+    }
+
+    .mini-card h3,
+    .feature-card h3,
+    .role-card h3,
+    .step-card h3{
+      margin:0 0 8px;
+      font-size:19px;
+      letter-spacing:-0.2px;
+    }
+
+    .mini-card p,
+    .feature-card p,
+    .role-card p,
+    .step-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .feature-card img{
       width:100%;
       height:180px;
       object-fit:contain;
@@ -176,42 +269,107 @@
       background:#fff;
       border:1px solid var(--border);
       padding:10px;
-      margin-bottom:10px;
+      margin-bottom:12px;
     }
-    .card h3{
-      margin:0 0 6px;
-      font-size:18px;
+
+    .role-card ul{
+      margin:12px 0 0;
+      padding-left:18px;
+      color:var(--muted);
     }
-    .card p{
-      margin:0;
-      color: var(--muted);
+
+    .role-card li{
+      margin:8px 0;
+    }
+
+    .highlight{
+      background:var(--surface-soft);
+    }
+
+    .cta{
+      text-align:center;
+      padding:32px 24px;
+    }
+
+    .cta p{
+      max-width:760px;
+      margin:0 auto 18px;
+      color:var(--muted);
+      font-size:17px;
+    }
+
+    footer{
+      margin-top:36px;
+      padding:22px 0 14px;
+      color:var(--muted);
       font-size:14px;
     }
 
-    /* Footer */
-    footer{
-      margin-top:36px;
-      padding:18px 0 10px;
-      color: var(--muted);
-      font-size:14px;
+    .footer-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--border);
+      padding-top:20px;
     }
-    footer .links{
+
+    .footer-links{
       display:flex;
       gap:14px;
-      margin-top:10px;
       flex-wrap:wrap;
     }
-    footer .links a{
+
+    .footer-links a{
       color:#2F80ED;
       text-decoration:none;
       font-weight:600;
     }
 
-    @media (max-width:900px){
-      .hero h1{font-size:34px}
-      .grid{grid-template-columns:1fr}
-      nav{justify-content:flex-start}
-      .hero-image img{max-height: 420px;}
+    .footer-note{
+      margin-top:10px;
+      max-width:760px;
+    }
+
+    @media (max-width:1000px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+      .grid-4{
+        grid-template-columns:repeat(2,1fr);
+      }
+      h1{
+        font-size:40px;
+      }
+    }
+
+    @media (max-width:760px){
+      .wrap{
+        padding:18px;
+      }
+      header{
+        position:static;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      nav{
+        justify-content:flex-start;
+      }
+      .grid-3,
+      .grid-2,
+      .grid-4{
+        grid-template-columns:1fr;
+      }
+      h1{
+        font-size:34px;
+      }
+      .hero-copy{
+        padding:26px 22px;
+      }
+      .section-card{
+        padding:22px;
+      }
     }
   </style>
 </head>
@@ -221,80 +379,241 @@
     <header>
       <a class="brand" href="index.html">
         <img src="assets/logo.png" alt="Hestia Care logo">
+        <span class="brand-name">Hestia Care</span>
       </a>
+
       <nav>
-        <a class="btn" href="privacy.html">Privacy Policy</a>
-        <a class="btn" href="terms.html">Terms of Use</a>
-        <a class="btn" href="support.html">Support</a>
-        <a class="btn" href="delete-account.html">Delete Account</a>
+        <a class="btn" href="#features">Features</a>
+        <a class="btn" href="#how-it-works">How It Works</a>
+        <a class="btn" href="#roles">Who It’s For</a>
+        <a class="btn primary" href="support.html">Contact</a>
       </nav>
     </header>
 
     <main>
       <section class="hero">
-        <!-- Image first (full width) -->
-        <div class="hero-image">
-          <img src="assets/main.png" alt="Caregiver supporting an older adult at home">
-        </div>
-
-        <!-- Text below (full width) -->
-        <div class="hero-card">
-          <div class="pill">Caregiving with love</div>
-          <h1>Simple daily support for caregivers and loved ones.</h1>
+        <div class="hero-copy">
+          <div class="eyebrow">Connected daily care</div>
+          <h1>Care coordination for caregivers and loved ones.</h1>
 
           <p>
-            Hestia Care helps families stay on track with everyday routines —
-            <strong>reminders</strong>, <strong>tasks</strong>, and gentle <strong>daily check-ins</strong>.
+            Hestia Care helps caregivers and care recipients stay connected through
+            daily tasks, medication tracking, wellness check-ins, messaging, and shared care visibility.
           </p>
 
           <p>
-            Built to feel calm, clear, and reassuring — especially when life gets busy.
+            Built to make everyday care clearer, calmer, and easier to manage.
           </p>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <a class="btn primary" href="support.html">Contact Support</a>
-            <a class="btn" href="privacy.html">Privacy Policy</a>
+          <div class="hero-actions">
+            <a class="btn primary" href="#features">Explore Features</a>
+            <a class="btn" href="support.html">Contact Support</a>
           </div>
 
-          <div class="disclaimer">
+          <div class="hero-note">
             <strong>Disclaimer:</strong> Hestia Care supports caregiving routines and coordination.
-            It does not provide medical advice.
+            It does not provide medical advice, diagnosis, or treatment.
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="assets/hero-dashboard.png" alt="Hestia Care app dashboard showing medications, tasks, and check-ins">
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="section-card">
+          <h2>Why families choose Hestia Care</h2>
+          <p class="lead">
+            A focused care experience designed around daily clarity, connection, and follow-through.
+          </p>
+
+          <div class="grid-3">
+            <div class="mini-card">
+              <h3>Connected care</h3>
+              <p>Caregivers and care recipients stay aligned through shared visibility and direct communication.</p>
+            </div>
+
+            <div class="mini-card">
+              <h3>Better daily adherence</h3>
+              <p>Track medications, tasks, and wellness routines in one place with clear daily progress.</p>
+            </div>
+
+            <div class="mini-card">
+              <h3>Simple by design</h3>
+              <p>A calm, easy-to-use experience built for real everyday caregiving without unnecessary complexity.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="section-card">
+          <h2>Everything needed for everyday care</h2>
+          <p class="lead">
+            Hestia Care supports daily caregiving with practical tools for coordination, adherence, communication, and visibility.
+          </p>
+
+          <div class="grid-4">
+            <div class="feature-card">
+              <img src="assets/feature-care-links.png" alt="Care Links feature illustration">
+              <h3>Care Links</h3>
+              <p>Connect caregivers and care recipients using invite codes for shared care coordination.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-tasks.png" alt="Daily Tasks feature illustration">
+              <h3>Daily Tasks</h3>
+              <p>Create, track, and complete recurring or one-time tasks as part of daily care routines.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-medications.png" alt="Medication Tracking feature illustration">
+              <h3>Medication Tracking</h3>
+              <p>Manage medication schedules and track adherence with a 7-day history.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-checkins.png" alt="Daily Check-ins feature illustration">
+              <h3>Daily Check-ins</h3>
+              <p>Log daily wellness with feeling, pain level, and sleep quality updates.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-messaging.png" alt="Messaging feature illustration">
+              <h3>Direct Messaging</h3>
+              <p>Support communication between caregiver and care recipient with unread message indicators.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-emergency-call.png" alt="Emergency Call feature illustration">
+              <h3>Emergency Call</h3>
+              <p>Care recipients can quickly reach their caregiver using a dedicated emergency call button.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-calendar.png" alt="Calendar feature illustration">
+              <h3>Care Calendar</h3>
+              <p>View medications, tasks, and check-ins together on an interactive calendar.</p>
+            </div>
+
+            <div class="feature-card">
+              <img src="assets/feature-activity-logs.png" alt="Activity Logs feature illustration">
+              <h3>Activity Logs</h3>
+              <p>Track completed actions such as medications taken, tasks completed, and check-ins submitted.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how-it-works">
+        <div class="section-card highlight">
+          <h2>How it works</h2>
+          <p class="lead">
+            A simple flow that helps caregivers and care recipients stay connected around daily care.
+          </p>
+
+          <div class="grid-3">
+            <div class="step-card">
+              <h3>1. Connect</h3>
+              <p>Caregivers and care recipients connect securely using invite codes.</p>
+            </div>
+
+            <div class="step-card">
+              <h3>2. Track</h3>
+              <p>Manage medications, tasks, check-ins, and shared daily care activities in one place.</p>
+            </div>
+
+            <div class="step-card">
+              <h3>3. Stay informed</h3>
+              <p>Use dashboards, messaging, calendar visibility, and activity history to support daily routines.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="roles">
+        <div class="section-card">
+          <h2>Built for both sides of care</h2>
+          <p class="lead">
+            Hestia Care supports both the person receiving care and the person helping manage it.
+          </p>
+
+          <div class="grid-2">
+            <div class="role-card">
+              <h3>For Care Recipients</h3>
+              <p>Stay on top of daily health routines with a simple, reassuring experience.</p>
+              <ul>
+                <li>Track medications and daily tasks</li>
+                <li>Complete wellness check-ins</li>
+                <li>View daily progress and fulfillment status</li>
+                <li>Message a caregiver directly</li>
+                <li>Use emergency call when needed</li>
+              </ul>
+            </div>
+
+            <div class="role-card">
+              <h3>For Caregivers</h3>
+              <p>Get a clear overview of daily care activity and support follow-through more effectively.</p>
+              <ul>
+                <li>Monitor adherence and daily completion</li>
+                <li>View care recipient activity and check-ins</li>
+                <li>Review calendar and activity logs</li>
+                <li>Communicate directly through messaging</li>
+                <li>Support routines with shared visibility</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="dashboards">
+        <div class="section-card">
+          <h2>Shared visibility into daily care</h2>
+          <p class="lead">
+            Dedicated dashboards for caregivers and care recipients make it easier to understand what has been completed,
+            what is pending, and what still needs attention.
+          </p>
+
+          <div class="grid-2">
+            <div class="mini-card">
+              <h3>Dashboard views</h3>
+              <p>Separate dashboard experiences for caregivers and care recipients, tailored to each role.</p>
+            </div>
+
+            <div class="mini-card">
+              <h3>Fulfillment tracking</h3>
+              <p>See daily progress across medications and tasks with statuses like completed, pending, and not started.</p>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="section">
-        <h2>What you can do with Hestia Care</h2>
-        <p class="lead">A calm, focused MVP that delivers value without overwhelm.</p>
-
-        <div class="grid">
-          <div class="card">
-            <img src="assets/reminders.png" alt="Reminders illustration">
-            <h3>Gentle reminders</h3>
-            <p>Support daily routines with friendly, non-intrusive reminders.</p>
-          </div>
-
-          <div class="card">
-            <img src="assets/tasks.png" alt="Tasks illustration">
-            <h3>Everyday tasks</h3>
-            <p>Keep track of simple daily tasks and mark them done in seconds.</p>
-          </div>
-
-          <div class="card">
-            <img src="assets/checkin.png" alt="Daily check-in illustration">
-            <h3>Daily check-ins</h3>
-            <p>A simple signal that helps caregivers stay informed and reassured.</p>
-          </div>
+        <div class="section-card cta">
+          <h2>Make daily care easier to manage</h2>
+          <p>
+            Bring medications, tasks, check-ins, messaging, and visibility together in one simple care experience.
+          </p>
+          <a class="btn primary" href="support.html">Contact Support</a>
         </div>
       </section>
 
       <footer>
-        <div>© 2026 Hestia Care</div>
-        <div class="links">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Use</a>
-          <a href="support.html">Support</a>
-          <a href="delete-account.html">Delete Account</a>
+        <div class="footer-top">
+          <div>
+            <div>© 2026 Hestia Care</div>
+            <div class="footer-note">
+              Hestia Care supports caregiving routines and coordination. It does not provide medical advice, diagnosis, or treatment.
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Use</a>
+            <a href="support.html">Support</a>
+            <a href="delete-account.html">Delete Account</a>
+          </div>
         </div>
       </footer>
     </main>
